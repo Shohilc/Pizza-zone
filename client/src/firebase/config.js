@@ -2,12 +2,12 @@ import { initializeApp, getApps } from 'firebase/app';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyB1QPHh-3H4vUm8k-Wgdum-Pc9dz1j1sB8",
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "pizza-zone-22d28.firebaseapp.com",
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "pizza-zone-22d28",
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "pizza-zone-22d28.firebasestorage.app",
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "586731098189",
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:586731098189:web:0d62decda5528893b54c04",
 };
 
 export const isFirebaseConfigured = Boolean(

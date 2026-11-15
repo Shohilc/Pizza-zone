@@ -234,12 +234,17 @@ export function AuthProvider({ children }) {
   // Email Sign In
   const signInWithEmail = async (email, password) => {
     if (!isFirebaseConfigured || !auth) {
-      throw new Error('Firebase Auth is not configured in client/.env. Please use Google Sign In or Quick Demo mode.');
+      throw new Error('Firebase Auth is not configured. Please use Google Sign In.');
     }
     const result = await signInWithEmailAndPassword(auth, email, password);
-    const data = await api.get('/auth/me');
-    if (data?.success && data?.user) {
-      setDbUser(data.user);
+    setCurrentUser(result.user);
+    try {
+      const data = await api.get('/auth/me');
+      if (data?.success && data?.user) {
+        setDbUser(data.user);
+      }
+    } catch (e) {
+      console.warn('[AuthContext] Backend sync notice:', e.message);
     }
     if (authSuccessCallback) {
       authSuccessCallback();
@@ -252,15 +257,22 @@ export function AuthProvider({ children }) {
   // Email Sign Up
   const signUpWithEmail = async (email, password, name) => {
     if (!isFirebaseConfigured || !auth) {
-      throw new Error('Firebase Auth is not configured in client/.env. Please use Google Sign In or Quick Demo mode.');
+      throw new Error('Firebase Auth is not configured. Please use Google Sign In.');
     }
     const result = await createUserWithEmailAndPassword(auth, email, password);
     if (name) {
-      await updateFirebaseProfile(result.user, { displayName: name });
+      try {
+        await updateFirebaseProfile(result.user, { displayName: name });
+      } catch (e) {}
     }
-    const data = await api.get('/auth/me');
-    if (data?.success && data?.user) {
-      setDbUser(data.user);
+    setCurrentUser(result.user);
+    try {
+      const data = await api.get('/auth/me');
+      if (data?.success && data?.user) {
+        setDbUser(data.user);
+      }
+    } catch (e) {
+      console.warn('[AuthContext] Backend sync notice:', e.message);
     }
     if (authSuccessCallback) {
       authSuccessCallback();
