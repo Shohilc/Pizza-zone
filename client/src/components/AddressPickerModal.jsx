@@ -413,6 +413,24 @@ export function AddressPickerModal({ isOpen, onClose, onSelectAddress, initialAd
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={async (e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      if (predictions.length > 0) {
+                        handleSelectPrediction(predictions[0]);
+                      } else if (searchQuery.trim().length >= 2) {
+                        setIsSearching(true);
+                        try {
+                          const res = await locationApi.placeAutocomplete(searchQuery.trim());
+                          if (res?.predictions?.length > 0) {
+                            handleSelectPrediction(res.predictions[0]);
+                          }
+                        } finally {
+                          setIsSearching(false);
+                        }
+                      }
+                    }
+                  }}
                   placeholder="Search your city, area, street, colony..."
                   className="w-full pl-10 pr-4 py-3 rounded-2xl bg-[#F7F8FA] border border-stone-200 text-xs font-semibold text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition"
                 />
@@ -423,16 +441,17 @@ export function AddressPickerModal({ isOpen, onClose, onSelectAddress, initialAd
 
               {/* Autocomplete Predictions Dropdown */}
               {predictions.length > 0 && (
-                <div className="bg-white rounded-2xl border border-stone-200 shadow-lg divide-y divide-stone-100 overflow-hidden max-h-52 overflow-y-auto">
+                <div className="bg-white rounded-2xl border border-stone-200 shadow-xl divide-y divide-stone-100 overflow-hidden max-h-56 overflow-y-auto relative z-30">
                   {predictions.map((p) => (
                     <button
+                      type="button"
                       key={p.placeId || p.description}
                       onClick={() => handleSelectPrediction(p)}
-                      className="w-full p-3 px-4 text-left hover:bg-brand-50/50 transition flex items-start gap-2.5"
+                      className="w-full p-3 px-4 text-left hover:bg-stone-50 transition flex items-start gap-2.5 cursor-pointer"
                     >
                       <MapPin className="w-4 h-4 text-brand-500 flex-shrink-0 mt-0.5" />
-                      <div className="min-w-0">
-                        <div className="text-xs font-black text-stone-900 truncate">{p.mainText}</div>
+                      <div className="min-w-0 flex-1">
+                        <div className="text-xs font-bold text-stone-900 truncate">{p.mainText}</div>
                         <div className="text-[10px] text-stone-400 truncate">{p.secondaryText || p.description}</div>
                       </div>
                     </button>
