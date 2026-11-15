@@ -76,6 +76,10 @@ export function AuthModal() {
           setError(
             'Google OAuth origin mismatch: Please make sure "http://localhost:5173" is added to "Authorized JavaScript origins" for this Client ID in Google Cloud Console.'
           );
+        } else if (msg.toLowerCase().includes('unauthorized-domain')) {
+          setError(
+            'Domain not authorized: Please add this domain (e.g. pizzazone-app.vercel.app) to Firebase Console > Authentication > Settings > Authorized domains. Or use Instant Test Switcher below.'
+          );
         } else if (msg.toLowerCase().includes('popup-closed') || msg.toLowerCase().includes('closed')) {
           setError('Google sign-in popup was closed before completing.');
         } else {

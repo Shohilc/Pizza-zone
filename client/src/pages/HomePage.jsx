@@ -15,6 +15,7 @@ import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { BottomNav } from '../components/BottomNav';
 import { AddressPickerModal } from '../components/AddressPickerModal';
+import { FALLBACK_CATEGORIES, FALLBACK_MENU_ITEMS } from '../data/fallbackMenu';
 
 
 export function HomePage() {
@@ -48,11 +49,23 @@ export function HomePage() {
           menuApi.getStoreSettings().catch(() => ({ settings: null })),
         ]);
 
-        if (catRes.categories) setCategories(catRes.categories);
-        if (itemRes.items) setMenuItems(itemRes.items);
-        if (storeRes.settings) setStoreSettings(storeRes.settings);
+        if (catRes?.categories?.length > 0) {
+          setCategories(catRes.categories);
+        } else {
+          setCategories(FALLBACK_CATEGORIES);
+        }
+
+        if (itemRes?.items?.length > 0) {
+          setMenuItems(itemRes.items);
+        } else {
+          setMenuItems(FALLBACK_MENU_ITEMS);
+        }
+
+        if (storeRes?.settings) setStoreSettings(storeRes.settings);
       } catch (err) {
-        console.error('Failed to load menu data:', err);
+        console.error('Failed to load menu data, using starter menu:', err);
+        setCategories(FALLBACK_CATEGORIES);
+        setMenuItems(FALLBACK_MENU_ITEMS);
       } finally {
         setLoading(false);
       }
