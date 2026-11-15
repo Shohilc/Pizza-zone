@@ -1,0 +1,12 @@
+{
+  "name": "snack-store-ordering-system",
+  "version": "1.0.0",
+  "description": "Snack Store Ordering Website (React Vite + Express + MongoDB Atlas + Firebase + Socket.io + Telegram Alerts)",
+  "scripts": {
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "seed": "cd server && npm run seed",
+    "build:client": "cd client && npm run build"
+  }
+}
+
