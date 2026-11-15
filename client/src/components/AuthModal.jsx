@@ -6,7 +6,6 @@ import {
   Phone,
   Lock,
   User,
-  Sparkles,
   LogOut,
   ExternalLink,
   ShieldCheck,
@@ -32,7 +31,6 @@ export function AuthModal() {
     signUpWithEmail,
     setupRecaptcha,
     sendPhoneOtp,
-    loginAsDemo,
     logout,
   } = useAuth();
 
@@ -78,7 +76,7 @@ export function AuthModal() {
           );
         } else if (msg.toLowerCase().includes('unauthorized-domain')) {
           setError(
-            'Domain not authorized: Please add this domain (e.g. pizzazone-app.vercel.app) to Firebase Console > Authentication > Settings > Authorized domains. Or use Instant Test Switcher below.'
+            'Domain not authorized: Please add this domain (e.g. pizzazone-app.vercel.app) to Firebase Console > Authentication > Settings > Authorized domains.'
           );
         } else if (msg.toLowerCase().includes('popup-closed') || msg.toLowerCase().includes('closed')) {
           setError('Google sign-in popup was closed before completing.');
@@ -566,36 +564,6 @@ export function AuthModal() {
             </>
           )}
         </div>
-
-        {/* Footer Demo Switcher */}
-        {!currentUser && (
-          <div className="mt-4 pt-4 border-t border-stone-100 bg-stone-50 -mx-6 -mb-6 p-5 rounded-b-[32px]">
-            <div className="flex items-center justify-between text-[11px] font-bold text-stone-500 uppercase tracking-wider mb-2">
-              <span className="flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-brand-500" />
-                <span>Instant Test Switcher</span>
-              </span>
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                type="button"
-                onClick={() => loginAsDemo('customer')}
-                className="p-2.5 bg-white border border-stone-200 rounded-xl text-xs font-semibold text-stone-700 hover:border-brand-500 hover:text-brand-600 transition text-left shadow-2xs"
-              >
-                <div className="text-[10px] text-stone-400">Customer Mode</div>
-                <div className="font-bold truncate">Demo Customer</div>
-              </button>
-              <button
-                type="button"
-                onClick={() => loginAsDemo('admin')}
-                className="p-2.5 bg-white border border-stone-200 rounded-xl text-xs font-semibold text-stone-700 hover:border-brand-500 hover:text-brand-600 transition text-left shadow-2xs"
-              >
-                <div className="text-[10px] text-brand-600 font-bold">Admin Portal</div>
-                <div className="font-bold truncate">Store Owner</div>
-              </button>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
