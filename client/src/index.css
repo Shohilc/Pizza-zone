@@ -11,7 +11,7 @@ body {
   min-height: 100vh;
   background-color: #f7f8fa; /* Soft neutral app background from mockup */
   color: #111827;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 

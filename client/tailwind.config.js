@@ -35,7 +35,7 @@ export default {
         'float': '0 10px 30px -5px rgba(250, 93, 0, 0.3)',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['Plus Jakarta Sans', 'system-ui', '-apple-system', 'sans-serif'],
       }
     },
   },
